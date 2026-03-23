@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenneth Alejandro Varón Cortés - Desarrollador Front End Junior</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables de color y fuentes */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #1abc9c;
+            --light-color: #f8f9fa;
+            --dark-color: #2c3e50;
+            --gray-light: #ecf0f1;
+            --gray-medium: #bdc3c7;
+            --text-color: #333;
+            --text-light: #555;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Contenedor principal */
+        .cv-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+            margin-bottom: 30px;
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Panel izquierdo (información personal) */
+        .left-panel {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 30px;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        /* Panel derecho (contenido principal) */
+        .right-panel {
+            padding: 40px 30px;
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        /* Encabezado - Sin foto */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .name {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .title {
+            font-size: 20px;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .experience-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* Secciones */
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--accent-color);
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        .left-panel .section-title {
+            color: white;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* Información de contacto */
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .contact-info i {
+            color: var(--accent-color);
+            margin-right: 12px;
+            font-size: 18px;
+            min-width: 24px;
+            text-align: center;
+            margin-top: 3px;
+        }
+
+        /* Habilidades */
+        .skill-item {
+            margin-bottom: 15px;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background-color: var(--gray-light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-level {
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 4px;
+            transition: width 1.5s ease;
+            width: 0;
+        }
+
+        /* Experiencia y educación */
+        .timeline-item {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 2px solid var(--secondary-color);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover {
+            transform: translateX(5px);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+        }
+
+        .timeline-date {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .timeline-subtitle {
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        /* Proyectos */
+        .project-item {
+            background-color: var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .project-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tech-tag {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        /* Referencias */
+        .reference-item {
+            background-color: var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .reference-name {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .reference-relation {
+            color: var(--secondary-color);
+            font-style: italic;
+            margin-bottom: 5px;
+        }
+
+        /* Botones y controles */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+        }
+
+        /* Estilos para impresión - Optimizado ATS */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+                max-width: 100%;
+                font-size: 12pt;
+                line-height: 1.4;
+            }
+            
+            .cv-container {
+                box-shadow: none;
+                grid-template-columns: 1fr 2fr;
+                gap: 15px;
+                margin-bottom: 0;
+                page-break-inside: avoid;
+            }
+            
+            .controls, .btn {
+                display: none !important;
+            }
+            
+            .left-panel {
+                background-color: var(--primary-color) !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding: 25px 15px !important;
+            }
+            
+            .right-panel {
+                padding: 25px 20px !important;
+            }
+            
+            .section-title, .name, .timeline-title, .project-title, .reference-name {
+                color: #000000 !important;
+            }
+            
+            .left-panel .section-title, .left-panel .name, .left-panel .title, .left-panel .contact-info li {
+                color: #ffffff !important;
+            }
+            
+            .skill-bar {
+                border: 1px solid #ccc;
+            }
+            
+            .skill-level {
+                background-color: #666 !important;
+            }
+            
+            .timeline-date {
+                background-color: #666 !important;
+                color: white !important;
+                border: 1px solid #333;
+            }
+            
+            .tech-tag {
+                background-color: #666 !important;
+                color: white !important;
+                border: 1px solid #333;
+            }
+            
+            .timeline-item:hover, .project-item:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+            
+            .skill-level {
+                transition: none !important;
+            }
+            
+            .section {
+                margin-bottom: 20px;
+                page-break-inside: avoid;
+            }
+            
+            .project-item, .reference-item {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .cv-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .left-panel {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .left-panel, .right-panel {
+                padding: 25px 20px;
+            }
+            
+            .name {
+                font-size: 28px;
+            }
+            
+            .title {
+                font-size: 18px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* ATS Keywords - visible solo para sistemas */
+        .ats-keywords {
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <!-- Controles principales -->
+    <div class="controls">
+        <button class="btn btn-primary" id="printBtn">
+            <i class="fas fa-print"></i> Imprimir / Guardar PDF
+        </button>
+    </div>
+
+    <!-- Contenedor principal del CV -->
+    <div class="cv-container">
+        <!-- Panel izquierdo -->
+        <div class="left-panel">
+            <div class="profile-header">
+                <h1 class="name">Kenneth Alejandro Varón Cortés</h1>
+                <h2 class="title">Desarrollador Front End Junior</h2>
+                <span class="experience-badge">+1 año de experiencia profesional</span>
+                <p style="font-size: 14px; margin-top: 15px;">Disponible para nuevas oportunidades</p>
+            </div>
+
+            <!-- Información de contacto -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-id-card"></i> Contacto</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> Bogotá, Colombia</li>
+                    <li><i class="fas fa-phone"></i> +57 322 350 8510</li>
+                    <li><i class="fas fa-envelope"></i> varonalejandroK@gmail.com</li>
+                    <li><i class="fab fa-github"></i> github.com/VaronKenneth</li>
+                    <li><i class="fas fa-globe"></i> https://esp.com.co/</li>
+                </ul>
+            </div>
+
+            <!-- Habilidades técnicas -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-code"></i> Habilidades Técnicas</h3>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>JavaScript / TypeScript</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-level="85"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Angular</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-level="75"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Next.js / React</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-level="80"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>HTML5 / CSS3</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-level="90"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Tailwind CSS / Bootstrap</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-level="80"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Git & GitHub</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-level="75"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Manejo de IA (Prompts, Integración)</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-level="85"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Idiomas -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-language"></i> Idiomas</h3>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Español</span>
+                        <span>Nativo</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-level="100"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Inglés</span>
+                        <span>B2 (Intermedio Alto)</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-level="80"></div>
+                    </div>
+                </div>
+                <p style="font-size: 13px; margin-top: 10px; color: var(--gray-light);">✅ Capacidad para comunicación técnica, lectura de documentación y reuniones en inglés</p>
+            </div>
+
+            <!-- Soft Skills -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-users"></i> Habilidades Blandas</h3>
+                <ul class="contact-info" style="list-style-type: disc; margin-left: 20px;">
+                    <li><i class="fas fa-check-circle" style="color: var(--accent-color);"></i> Trabajo en equipo</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--accent-color);"></i> Resolución de problemas</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--accent-color);"></i> Aprendizaje rápido</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--accent-color);"></i> Comunicación efectiva</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--accent-color);"></i> Adaptabilidad</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--accent-color);"></i> Innovación con herramientas de IA</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Panel derecho -->
+        <div class="right-panel">
+            <!-- Perfil profesional -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-user-tie"></i> Perfil Profesional</h3>
+                <p>Desarrollador Front End Junior con <strong>+1 año de experiencia profesional</strong> en desarrollo de aplicaciones web utilizando <strong>Angular, Next.js y React</strong>. Estudiante de Ingeniería de Sistemas con habilidades comprobadas en creación de interfaces responsive, colaboración en equipo y entrega de proyectos funcionales. <strong>Experto en manejo e integración de herramientas de IA</strong> (ChatGPT, Claude, Copilot) para optimizar procesos de desarrollo, generar código y automatizar tareas. Con <strong>nivel de inglés B2</strong> para comunicación técnica efectiva. Actualmente buscando nuevas oportunidades para contribuir con mi conocimiento técnico y pasión por la innovación en un equipo de desarrollo dinámico.</p>
+            </div>
+
+            <!-- Experiencia laboral -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-briefcase"></i> Experiencia Laboral</h3>
+                
+                <div class="timeline-item">
+                    <span class="timeline-date">Julio 2025 - Actualidad</span>
+                    <h4 class="timeline-title">Asistente de Desarrollo Junior (Freelance)</h4>
+                    <p class="timeline-subtitle">Trabajo Remoto - Disponible para segundo empleo</p>
+                    <ul style="padding-left: 20px; margin-top: 10px;">
+                        <li>Asistencia a desarrollador Full Stack en implementación de features para aplicación web</li>
+                        <li>Desarrollo de módulos de gestión de usuarios (CRUD) e interfaz de chat con IA</li>
+                        <li>Mantenimiento y mejora de interfaces existentes</li>
+                        <li><strong>Implementación y gestión de una IA propia de la página</strong>, optimizando respuestas y flujos de conversación</li>
+                        <li>Uso de herramientas de IA (Copilot, ChatGPT) para acelerar desarrollo y debugging</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <span class="timeline-date">Junio 2024 - Diciembre 2024</span>
+                    <h4 class="timeline-title">Desarrollador Front End Freelance</h4>
+                    <p class="timeline-subtitle">Proyectos Independientes</p>
+                    <ul style="padding-left: 20px; margin-top: 10px;">
+                        <li>Desarrollo del frontend completo para ESP Filters, asegurando fidelidad al diseño y responsive design</li>
+                        <li>Creación de landing page para Berly Aid desde diseño en Figma hasta implementación funcional</li>
+                        <li>Colaboración con desarrollador backend para integración de APIs y funcionalidades</li>
+                        <li>Implementación de sistema de contacto directo con propietarios</li>
+                        <li><strong>Utilización de IA para optimizar tiempos de desarrollo y generar documentación técnica</strong></li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="timeline-date">Enero 2024 - Mayo 2024</span>
+                    <h4 class="timeline-title">Desarrollador Front End en Formación</h4>
+                    <p class="timeline-subtitle">Proyectos Académicos y Personales</p>
+                    <ul style="padding-left: 20px; margin-top: 10px;">
+                        <li>Desarrollo de proyectos personales con Angular y TypeScript</li>
+                        <li>Creación de componentes reutilizables y servicios para consumo de APIs</li>
+                        <li>Implementación de rutas y guards para autenticación en aplicaciones Angular</li>
+                        <li>Optimización de rendimiento y buenas prácticas de desarrollo</li>
+                        <li><strong>Exploración de herramientas de IA para generación de código y prototipado rápido</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Proyectos -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-project-diagram"></i> Proyectos Destacados</h3>
+                
+                <div class="project-item">
+                    <div class="project-title">
+                        ESP Filters - E-commerce Automotriz
+                        <a href="https://esp.com.co/" target="_blank" style="color: var(--secondary-color); font-size: 14px;">
+                            <i class="fas fa-external-link-alt"></i> Ver sitio
+                        </a>
+                    </div>
+                    <p>Desarrollo completo del frontend para plataforma de venta de filtros para vehículos con catálogo, búsqueda y funcionalidades de compra. Página E-commerce que permite visualización, búsqueda y compra de filtros para carro.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Next.js</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Tailwind CSS</span>
+                        <span class="tech-tag">Responsive Design</span>
+                        <span class="tech-tag">Figma</span>
+                    </div>
+                </div>
+                
+                <div class="project-item">
+                    <div class="project-title">
+                        Berly Aid - Landing Page Corporativa
+                        <a href="https://github.com/VaronKenneth" target="_blank" style="color: var(--secondary-color); font-size: 14px;">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                    <p>Landing page completa, ordenada, limpia y funcional que permitía contacto directo con el dueño por correo o llamada. Diseño y proyecto Figma que brinda experiencia agradable con el usuario.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Next.js</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Tailwind CSS</span>
+                        <span class="tech-tag">Figma</span>
+                        <span class="tech-tag">Email Integration</span>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-title">
+                        Dashboard Administrativo con Angular
+                        <a href="https://github.com/VaronKenneth" target="_blank" style="color: var(--secondary-color); font-size: 14px;">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                    <p>Aplicación de administración con Angular 17, implementando autenticación, CRUD completo, guards para rutas protegidas y consumo de APIs REST.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Angular 17</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">RxJS</span>
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">REST APIs</span>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-title">
+                        Asistente IA - Integración de Chatbot
+                        <a href="https://github.com/VaronKenneth" target="_blank" style="color: var(--secondary-color); font-size: 14px;">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                    <p>Implementación de un asistente conversacional con IA para atención al cliente y soporte técnico. Configuración de prompts, gestión de contexto y optimización de respuestas.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">OpenAI API</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Prompt Engineering</span>
+                        <span class="tech-tag">Integración API</span>
+                        <span class="tech-tag">Chatbot</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Educación -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Educación</h3>
+                
+                <div class="timeline-item">
+                    <span class="timeline-date">En curso</span>
+                    <h4 class="timeline-title">Ingeniería de Sistemas</h4>
+                    <p class="timeline-subtitle">Universidad - Bogotá, Colombia</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <span class="timeline-date">Graduado 2023</span>
+                    <h4 class="timeline-title">Bachiller Técnico con Especialidad Comercial</h4>
+                    <p class="timeline-subtitle">I.E.T Camila Molano - Venadillo, Tolima</p>
+                </div>
+            </div>
+
+            <!-- Referencias -->
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-comments"></i> Referencias Personales</h3>
+                
+                <div class="reference-item">
+                    <div class="reference-name">Fabio Rivera</div>
+                    <div class="reference-relation">Jefe anterior - Desarrollador Front End Freelance</div>
+                    <div>Teléfono: +57 305 932 4196</div>
+                </div>
+                
+                <div class="reference-item">
+                    <div class="reference-name">Carol Guzmán</div>
+                    <div class="reference-relation">Colega profesional - Amiga</div>
+                    <div>Teléfono: +57 322 200 5784</div>
+                </div>
+            </div>
+
+            <!-- Palabras clave para ATS (ocultas visualmente) -->
+            <div class="ats-keywords">
+                Kenneth Alejandro Varón Cortés, Desarrollador Front End Junior, Programador Web, Angular, Next.js, React, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS, Bootstrap, Responsive Design, Desarrollo Web, Frontend Developer, Git, GitHub, Figma, Bogotá Colombia, Freelance, Desarrollo de aplicaciones web, Interfaces de usuario, UI/UX, Aplicaciones responsivas, E-commerce, Landing Pages, Ingeniería de Sistemas, Estudiante, Trabajo en equipo, Resolución de problemas, Comunicación efectiva, 1 año de experiencia, Inglés B2, Disponible para empleo, Segundo empleo, Colombia, Desarrollo Front End, Angular Developer, Inteligencia Artificial, IA, Manejo de IA, Prompt Engineering, ChatGPT, OpenAI, Asistentes virtuales, Chatbot, Integración de IA, Automatización, Innovación tecnológica
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animación de barras de habilidades
+            const skillLevels = document.querySelectorAll('.skill-level');
+            skillLevels.forEach(skill => {
+                const level = skill.getAttribute('data-level');
+                setTimeout(() => {
+                    skill.style.width = level + '%';
+                }, 300);
+            });
+
+            // Botón de impresión/PDF
+            document.getElementById('printBtn').addEventListener('click', function() {
+                window.print();
+            });
+
+            // Efecto hover para elementos interactivos
+            const interactiveItems = document.querySelectorAll('.timeline-item, .project-item, .reference-item');
+            interactiveItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(5px)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
